@@ -7,11 +7,14 @@ import { adminGalleryRouter } from "./routes/admin-gallery.js";
 
 export const app = express();
 
-app.use(
-    cors({
-        origin: env.FRONTEND_ORIGIN
-    })
-);
+const corsOptions = {
+    origin: env.FRONTEND_ORIGIN,
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use(express.json());
 app.use("/api", healthRouter);
